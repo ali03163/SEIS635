@@ -1,4 +1,4 @@
-# SEIS635
+# SEIS635 - Group 4
 SEIS635
 
 Group 4??
