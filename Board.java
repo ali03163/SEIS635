@@ -1,5 +1,7 @@
+import java.util.Scanner;
 
 public class Board {
+	Scanner scan = new Scanner(System.in);
 	private int[] board = {4,4,4,4,4,4,0,4,4,4,4,4,4,0};
 	private char[] labels = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N'};
 	private void printSolidLine(int dots, boolean newLine) {
@@ -39,16 +41,23 @@ public class Board {
 		printSolidLine(1, true);
 	}
 	public void printBoard() {
-		printSolidLine(41, true);
+		printSolidLine(33, true);
 		printDottedLine(8, false);
 		printSolidLine(1, true);
 		printTopPlayer();
 		printDottedLine(8, false);
 		printSolidLine(1, true);
-		printSolidLine(41, true);
+		printSolidLine(33, true);
+		printDottedLine(8, false);
+		printSolidLine(1, true);
 		printBottomPlayer();
 		printDottedLine(8, false);
 		printSolidLine(1, true);
-		printSolidLine(41, true);
+		printSolidLine(33, true);
+	}
+	int makeMove(Player p) {
+		System.out.print(p.getName() + " choose from pits " + labels[p.getStart()] + " and " + labels[p.getEnd()] + ": ");
+		char chose = scan.next().toUpperCase().charAt(0);
+		return 0;
 	}
 }
