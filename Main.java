@@ -15,6 +15,13 @@ public class Main {
 			players[0] = new Player(input.nextLine());
 			System.out.print("What is the name of the second player? ");
 			players[1] = new Player(input.nextLine());
+			Random rand = new Random();
+			int current = rand.nextInt(2);
+			boolean loop = true;
+			do {
+				System.out.println("It is " + players[current].getName() + "'s turn");
+				loop = !loop;
+			} while(loop);
 			finished = !finished;
 		}
 		else if(selection == 2) {
