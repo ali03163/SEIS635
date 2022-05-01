@@ -3,7 +3,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		Board b = new Board();
-		b.printBoard();
 		boolean finished = false;
 		// TODO Auto-generated method stub
 		while(!finished) {
@@ -22,7 +21,12 @@ public class Main {
 			boolean loop = true;
 			do {
 				System.out.println("It is " + players[current].getName() + "'s turn");
-				loop = !loop;
+				current = b.playerMove(players[current]);
+				if (current == 0) {
+					loop = false;
+				} else {
+					current--;
+				}
 			} while(loop);
 			finished = !finished;
 		}

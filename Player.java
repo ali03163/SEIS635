@@ -11,11 +11,11 @@ public class Player {
 		if(p == 1) {
 			start = 0;
 			end = 5;
-			mancala = 6;
+			setMancala(6);
 		} else if (p == 2) {
 			start = 7;
 			end = 12;
-			mancala = 13;
+			setMancala(13);
 		}
 	}
 	public String getName() {
@@ -35,5 +35,11 @@ public class Player {
 	}
 	public int getEnd() {
 		return end;
+	}
+	public int getMancala() {
+		return mancala;
+	}
+	public void setMancala(int mancala) {
+		this.mancala = mancala;
 	}
 }
