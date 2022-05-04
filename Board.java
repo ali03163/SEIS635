@@ -115,7 +115,7 @@ public class Board {
 				System.out.println("Select a pit on your side that contains stones");
 				if (checkSideEmpty() > 0) {
 					loop = false;
-					System.out.println("At least one side if empty, the game is over");
+					System.out.println("At least one side is empty, the game is over");
 					index = -1;
 				}
 			}
@@ -142,8 +142,18 @@ public class Board {
 			} else if (player.getPlayer() == 2 && player.getMancala() == index) {
 				retVal = 2;
 			} else if (player.getPlayer() == 1) {
+				if (board[index] == 1 && index >= 0 && index <= 5) {
+					board[player.getMancala()] += board[index] + board[12 - index];
+					board[index] = 0;
+					board[12 - index] = 0;
+				}
 				retVal = 2;
 			} else {
+				if (board[index] == 1 && index >= 7 && index <= 12) {
+					board[player.getMancala()] += board[index] + board[-1 * index + 12];
+					board[index] = 0;
+					board[-1 * index + 12] = 0;
+				}
 				retVal = 1;
 			}
 		}
