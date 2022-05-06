@@ -55,12 +55,8 @@ public class Board {
 		printSolidLine(1, true);
 		printSolidLine(33, true);
 	}
-	int makeMove(Player p) {
-		System.out.print(p.getName() + " choose from pits " + labels[p.getStart()] + " and " + labels[p.getEnd()] + ": ");
-		char chose = scan.next().toUpperCase().charAt(0);
-		return 0;
-	}
-	int findIndex(char letter) {
+	
+	private int findIndex(char letter) {
 		int retVal = -1;
 		int index = -1;
 		while (index < labels.length-1) {
@@ -72,35 +68,55 @@ public class Board {
 		}
 		return retVal;
 	}
-	public int checkSideEmpty() {
-		int p1 = 0;
-		int p2 = 0;
-		for (int i = 0; i < 7; i++) {
-			if (board[i] != 0) {
-				p1 = 0;
-				break;
-			} else {
-				p1 = 1;
-			}
+	
+	private boolean isGameOver(Player p) {
+		if (p.getPlayer() == 1) {
+			for (int i = 0; i < 6; i++) {
+				if (board[i] != 0) {
+					return false;
+				}
 		}
-		for (int i = 8; i < 12; i++) {
-			if (board[i] != 0) {
-				p2 = 0;
-				break;
-			} else {
-				p2 = 1;
-			}
+	}
+		else if(p.getPlayer() == 2) {
+			for (int i = 7; i < 13; i++) {
+				if (board[i] != 0) {
+					return false;
+				}
 		}
-		return p1 + p2;
+		}
+		for (int i = 0; i < 6; i++) {
+			board[6]+=board[i];
+			board[i] = 0;
+		}
+		for (int i = 7; i < 13; i++) {
+			board[13]+=board[i];
+			board[i] = 0;
+		}
+		printBoard();
+		return true;
+		}
+	public String getScore(Player p1, Player p2) {
+		return "Score: " + p1.getName() + ": " + board[p1.getMancala()] + " | " + p2.getName() + ": " + board[p2.getMancala()];
+	}
+	public String getWinner(Player p1, Player p2) {
+		if(board[p1.getMancala()] < board[p2.getMancala()]) {
+			return p2.getName() +" won!";
+		} else {
+			return p1.getName() +" won!";
+		}
 	}
 	public int playerMove(Player player) {
 		int retVal = 0;
 		int index = -1;
 		boolean loop = true;
-		boolean again = false;
 		char letter = 'Z';
 		printBoard();
 		do {
+			if(isGameOver(player)) {
+				loop = false;
+				System.out.println(player.getName() + "'s side is empty, the game is over");
+				index = -1;
+			} else {
 			System.out.print("Hello " + player.getName() + ", choose a pit between " + labels[player.getStart()] + " and " + labels[player.getEnd()] + ": ");
 			loop = true;
 			try {
@@ -113,13 +129,9 @@ public class Board {
 				loop = false;
 			} else {
 				System.out.println("Select a pit on your side that contains stones");
-				if (checkSideEmpty() > 0) {
-					loop = false;
-					System.out.println("At least one side is empty, the game is over");
-					index = -1;
-				}
+				
 			}
-		} while (loop);
+		}} while (loop);
 		if (index == -1) {
 			retVal = 0;
 		}
@@ -142,14 +154,14 @@ public class Board {
 			} else if (player.getPlayer() == 2 && player.getMancala() == index) {
 				retVal = 2;
 			} else if (player.getPlayer() == 1) {
-				if (board[index] == 1 && index >= 0 && index <= 5) {
+				if (board[index] == 1 && board[12 - index] > 0 && index >= 0 && index <= 5) {
 					board[player.getMancala()] += board[index] + board[12 - index];
 					board[index] = 0;
 					board[12 - index] = 0;
 				}
 				retVal = 2;
 			} else {
-				if (board[index] == 1 && index >= 7 && index <= 12) {
+				if (board[index] == 1 && board[-1 * index + 12] > 0 && index >= 7 && index <= 12) {
 					board[player.getMancala()] += board[index] + board[-1 * index + 12];
 					board[index] = 0;
 					board[-1 * index + 12] = 0;
